@@ -24,29 +24,37 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
     <p class="form-alert" role="alert" data-form-alert hidden></p>
 
     <div class="field">
-      <label for="cf-name">{t("contact.name")} <span class="field__req">({t("contact.required")})</span></label>
-      <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength={LIMITS.nameMax} aria-describedby="cf-name-error" />
+      <div class="field__box">
+        <label for="cf-name">{t("contact.name")} <span class="field__req">({t("contact.required")})</span></label>
+        <input id="cf-name" name="name" type="text" autocomplete="name" required maxlength={LIMITS.nameMax} aria-describedby="cf-name-error" />
+      </div>
       <p class="field__error" id="cf-name-error" data-error-for="name"></p>
     </div>
 
     <div class="field">
-      <label for="cf-email">{t("contact.email")} <span class="field__req">({t("contact.required")})</span></label>
-      <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength={LIMITS.emailMax} aria-describedby="cf-email-error" />
+      <div class="field__box">
+        <label for="cf-email">{t("contact.email")} <span class="field__req">({t("contact.required")})</span></label>
+        <input id="cf-email" name="email" type="email" autocomplete="email" required maxlength={LIMITS.emailMax} aria-describedby="cf-email-error" />
+      </div>
       <p class="field__error" id="cf-email-error" data-error-for="email"></p>
     </div>
 
     <div class="field">
-      <label for="cf-type">{t("contact.enquiryType")} <span class="field__req">({t("contact.required")})</span></label>
-      <select id="cf-type" name="enquiryType" required aria-describedby="cf-type-error">
-        <option value="">{t("contact.enquiryType.choose")}</option>
-        {ENQUIRY_TYPES.map((type) => <option value={type}>{t(`contact.enquiryType.${type}` as UIKey)}</option>)}
-      </select>
+      <div class="field__box">
+        <label for="cf-type">{t("contact.enquiryType")} <span class="field__req">({t("contact.required")})</span></label>
+        <select id="cf-type" name="enquiryType" required aria-describedby="cf-type-error">
+          <option value="">{t("contact.enquiryType.choose")}</option>
+          {ENQUIRY_TYPES.map((type) => <option value={type}>{t(`contact.enquiryType.${type}` as UIKey)}</option>)}
+        </select>
+      </div>
       <p class="field__error" id="cf-type-error" data-error-for="enquiryType"></p>
     </div>
 
     <div class="field">
-      <label for="cf-message">{t("contact.message")} <span class="field__req">({t("contact.required")})</span></label>
-      <textarea id="cf-message" name="message" rows="7" required maxlength={LIMITS.messageMax} aria-describedby="cf-message-error"></textarea>
+      <div class="field__box">
+        <label for="cf-message">{t("contact.message")} <span class="field__req">({t("contact.required")})</span></label>
+        <textarea id="cf-message" name="message" rows="7" required maxlength={LIMITS.messageMax} aria-describedby="cf-message-error"></textarea>
+      </div>
       <p class="field__error" id="cf-message-error" data-error-for="message"></p>
     </div>
 

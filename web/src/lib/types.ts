@@ -13,6 +13,9 @@ export type SocialLink = { platform: string; label?: string; url: string };
 
 export type SiteSettings = {
   title: string;
+  /** Name shown in the footer's © line. */
+  ownerName: string;
+  logo?: ImageRef;
   description: string;
   shareImage?: ImageRef;
   socialLinks: SocialLink[];
@@ -30,7 +33,10 @@ export type AboutPage = PageContent & { bio?: PortableTextBlock[]; portrait?: Im
 
 export type PrivacyPage = { heading: string; seoDescription?: string; body?: PortableTextBlock[]; updated?: string };
 
-export type Collection = { _id: string; title: string; description?: string };
+export type HomePage = PageContent & { featuredImages: ImageRef[] };
+
+/** A photo shoot / series. Listed on /photography, with its own gallery page. */
+export type Collection = { _id: string; title: string; slug: string; description?: string; cover?: ImageRef };
 
 export type Photo = { _id: string; image: ImageRef; caption?: string; collectionId?: string };
 

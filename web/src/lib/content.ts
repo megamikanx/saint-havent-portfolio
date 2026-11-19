@@ -10,6 +10,7 @@ import * as placeholder from "./placeholders.ts";
 import type {
   AboutPage,
   Collection,
+  HomePage,
   ImageRef,
   PageContent,
   PageKey,
@@ -24,11 +25,12 @@ import type {
 const IMAGE = `{ ..., asset->{ _id, metadata { dimensions, lqip } } }`;
 
 const queries = {
-  settings: `*[_id == "siteSettings"][0]{ title, description, shareImage${IMAGE}, socialLinks[]{ platform, label, url } }`,
+  settings: `*[_id == "siteSettings"][0]{ title, ownerName, description, logo${IMAGE}, shareImage${IMAGE}, socialLinks[]{ platform, label, url } }`,
+  home: `*[_id == "homePage"][0]{ heading, intro, seoDescription, featuredImages[]${IMAGE} }`,
   page: `*[_id == $id][0]{ heading, intro, seoDescription }`,
   about: `*[_id == "aboutPage"][0]{ heading, intro, seoDescription, bio, portrait${IMAGE} }`,
   privacy: `*[_id == "privacyPage"][0]{ heading, seoDescription, body, "updated": coalesce(lastUpdated, _updatedAt) }`,
-  collections: `*[_type == "collection"] | order(orderRank) { _id, title, description }`,
+  collections: `*[_type == "collection" && defined(slug.current)] | order(orderRank) { _id, title, "slug": slug.current, description, cover${IMAGE} }`,
   photos: `*[_type == "photo" && defined(image.asset)] | order(orderRank) { _id, caption, "collectionId": collection._ref, image${IMAGE} }`,
   videos: `*[_type == "video" && defined(url)] | order(orderRank) { _id, title, url, description }`,
   releases: `*[_type == "release" && defined(bandcamp)] | order(orderRank) { _id, title, year, bandcamp, cover${IMAGE} }`,
@@ -66,14 +68,18 @@ export function getSiteSettings(): Promise<SiteSettings> {
   return cached("settings", async () => {
     const raw = await fetchSanity<{
       title?: string;
+      ownerName?: string;
       description?: string;
+      logo?: RawImage;
       shareImage?: RawImage;
       socialLinks?: SiteSettings["socialLinks"];
     }>(queries.settings);
     if (!raw) return placeholder.settings;
     return {
       title: raw.title || placeholder.settings.title,
+      ownerName: raw.ownerName || raw.title || placeholder.settings.ownerName,
       description: raw.description || placeholder.settings.description,
+      logo: toImageRef(raw.logo, raw.title),
       shareImage: toImageRef(raw.shareImage, raw.title),
       socialLinks: (raw.socialLinks ?? []).filter((l) => l?.url),
     };
@@ -84,6 +90,20 @@ export function getPage(key: PageKey): Promise<PageContent> {
   return cached(`page:${key}`, async () => {
     const raw = await fetchSanity<Partial<PageContent>>(queries.page, { id: `${key}Page` });
     return { ...placeholder.pages[key], ...stripEmpty(raw) };
+  });
+}
+
+/** Home page text plus its two featured photos (falling back to the first two photos). */
+export function getHomePage(): Promise<HomePage> {
+  return cached("home", async () => {
+    const raw = await fetchSanity<Partial<PageContent> & { featuredImages?: RawImage[] }>(queries.home);
+    const { featuredImages, ...rest } = raw ?? {};
+    let images = (featuredImages ?? []).map((img) => toImageRef(img)).filter((img): img is ImageRef => !!img);
+    if (images.length < 2) {
+      const { photos } = await getPhotos();
+      images = [...images, ...photos.map((p) => p.image)].slice(0, 2);
+    }
+    return { ...placeholder.pages.home, ...stripEmpty(rest), featuredImages: images };
   });
 }
 
@@ -116,9 +136,9 @@ export function getPrivacyPage(): Promise<PrivacyPage> {
 
 export function getPhotos(): Promise<{ collections: Collection[]; photos: Photo[] }> {
   return cached("photos", async () => {
-    if (!isSanityConfigured) return { collections: [], photos: placeholder.photos };
-    const [collections, raw] = await Promise.all([
-      fetchSanity<Collection[]>(queries.collections),
+    if (!isSanityConfigured) return { collections: placeholder.collections, photos: placeholder.photos };
+    const [rawCollections, raw] = await Promise.all([
+      fetchSanity<(Omit<Collection, "cover"> & { cover?: RawImage })[]>(queries.collections),
       fetchSanity<{ _id: string; caption?: string; collectionId?: string; image: RawImage }[]>(queries.photos),
     ]);
     const photos: Photo[] = [];
@@ -126,7 +146,12 @@ export function getPhotos(): Promise<{ collections: Collection[]; photos: Photo[
       const image = toImageRef(p.image);
       if (image) photos.push({ _id: p._id, image, caption: p.caption, collectionId: p.collectionId });
     }
-    return { collections: collections ?? [], photos };
+    const collections: Collection[] = (rawCollections ?? []).map((c) => ({
+      ...c,
+      // No cover chosen? Use the shoot's first photo.
+      cover: toImageRef(c.cover, c.title) ?? photos.find((p) => p.collectionId === c._id)?.image,
+    }));
+    return { collections, photos };
   });
 }
 

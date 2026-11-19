@@ -1,5 +1,10 @@
 ---
+/**
+ * About: same frame as the other inner pages: portrait box, then the
+ * intro, bio and social links stacked in the centre column.
+ */
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageFrame from "../components/PageFrame.astro";
 import Img from "../components/Img.astro";
 import PortableText from "../components/PortableText.astro";
 import SocialLinks from "../components/SocialLinks.astro";
@@ -11,26 +16,26 @@ const settings = await getSiteSettings();
 ---
 
 <BaseLayout title={page.heading} description={page.seoDescription ?? page.intro} shareImage={page.portrait}>
-  <div class="about container">
+  <PageFrame title={page.heading} zh={t("decor.page.about")}>
     {
       page.portrait && (
-        <Img
-          image={page.portrait}
-          alt={page.portrait.alt || t("about.portraitFallbackAlt")}
-          aspect={4 / 5}
-          sizes="(min-width: 900px) 40vw, 100vw"
-          widths={[480, 720, 960, 1280]}
-          loading="eager"
-          fetchpriority="high"
-          class="about__portrait"
-        />
+        <div class="stack__media stack__media--portrait">
+          <Img
+            image={page.portrait}
+            alt={page.portrait.alt || t("about.portraitFallbackAlt")}
+            aspect={4 / 5}
+            sizes="(min-width: 700px) 520px, 100vw"
+            widths={[400, 520, 780, 1040]}
+            loading="eager"
+            fetchpriority="high"
+          />
+        </div>
       )
     }
-    <div class="about__text">
-      <h1>{page.heading}</h1>
+    <div class="stack__text">
       {page.intro && <p class="lede">{page.intro}</p>}
       <PortableText value={page.bio} />
       <SocialLinks links={settings.socialLinks} class="social-links--inline" />
     </div>
-  </div>
+  </PageFrame>
 </BaseLayout>

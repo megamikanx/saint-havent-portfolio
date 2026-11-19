@@ -13,7 +13,7 @@ On the left is the menu:
 
 - **Site settings**: your site name, social links, share image and the email address for contact form messages
 - **Pages**: the headings and text on each page
-- **Photos**, **Photo collections**, **Videos**, **Music releases**: your work
+- **Photos**, **Shoots / series**, **Videos**, **Music releases**: your work
 
 ---
 
@@ -36,7 +36,7 @@ Every field has a short explanation underneath it. If something is required or n
 2. Under **Photo**, drag in an image or click **Upload**. Use the highest-quality file you have. The website makes smaller, faster versions automatically.
 3. **Alt text** (required): describe what's in the photo in one short sentence, as if to someone who can't see it. Example: *"Singer on stage under red lights, holding a microphone."* This helps blind visitors and search engines.
 4. **Caption** (optional): appears under the photo, e.g. the subject, location or client.
-5. **Collection** (optional): pick a series to group this photo with (see below).
+5. **Shoot / series**: pick which shoot this photo belongs to (see below).
 6. Click **Publish**.
 
 **Tip — choosing the crop:** thumbnails on the website are cropped. Click the **crop icon** on the image and drag the circle onto the most important part (a face, for example) so it's never cut off.
@@ -48,14 +48,14 @@ Every field has a short explanation underneath it. If something is required or n
 ### Remove a photo
 Open the photo, click **⋯** next to Publish, then **Delete**, and confirm.
 
-### Group photos into collections
-Collections show as separate sections on the Photography page, each with its own heading.
+### Shoots (how the Photography page is organised)
+The Photography page lists your shoots, each with a large cover photo and a short description. Clicking one opens that shoot's own page with all its photos.
 
-1. Click **Photo collections** → **+**. Give it a name (e.g. *"Tour 2026"*) and an optional description. **Publish**.
-2. Open each photo you want in it, choose the collection in the **Collection** field, and **Publish**.
-3. Drag collections in **Photo collections** to change the order of the sections.
+1. Click **Shoots / series** → **+**. Give it a name (e.g. *"Tour 2026"*), click **Generate** next to **Page address**, add a wide **Cover photo** (with alt text) and an optional description. **Publish**.
+2. Open each photo you want in it, choose the shoot in the **Shoot / series** field, and **Publish**.
+3. Drag shoots in **Shoots / series** to change their order on the Photography page.
 
-Photos without a collection appear at the end, under "More work".
+Photos that aren't in any shoot appear at the end of the Photography page, under "More work".
 
 ---
 
@@ -94,7 +94,9 @@ Visitors see the cover, title and year, with a button that loads the Bandcamp pl
 
 ## Editing page text
 
-Click **Pages**, then the page you want:
+Click **Pages**, then the page you want. On the **Home** page you can also choose the two **Featured photos** shown side by side at the top (drag to swap them).
+
+For every page:
 
 - **Page heading**: the big title at the top.
 - **Intro text**: a sentence or two under the heading.
@@ -113,7 +115,9 @@ Click **Publish** after editing.
 
 ## Site settings
 
-- **Site title**: your name or brand, shown in the header and browser tabs.
+- **Site title**: your brand, shown in browser tabs and search results (and as the logo if you haven't uploaded one).
+- **Your name (for the © line)**: shown at the bottom of every page.
+- **Logo**: optional image shown at the top of every page.
 - **Default search engine description**: one or two sentences about you, used in Google results.
 - **Default share image**: the picture that appears when someone shares a link to your site. Best size: 1200 × 630 (landscape).
 - **Social and streaming links**: shown in every page's footer and on the About page. Click **Add item**, choose the platform and paste the full link. Drag to reorder.

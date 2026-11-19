@@ -1,12 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageFrame from "../components/PageFrame.astro";
 import { t } from "../i18n/index.ts";
 ---
 
 <BaseLayout title={t("notFound.heading")} noindex>
-  <div class="container container--narrow page-intro">
-    <h1>{t("notFound.heading")}</h1>
+  <PageFrame title={t("notFound.heading")}>
     <p>{t("notFound.body")}</p>
-    <p><a href="/">{t("notFound.home")}</a></p>
-  </div>
+    <p class="back-link"><a href="/">{t("notFound.home")}</a></p>
+  </PageFrame>
 </BaseLayout>

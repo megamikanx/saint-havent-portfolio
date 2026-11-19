@@ -43,7 +43,7 @@ const structure: StructureResolver = (S, context) =>
       S.divider(),
       // Drag-to-reorder lists. The order here is the order on the website.
       orderableDocumentListDeskItem({ type: "photo", title: "Photos", icon: ImageIcon, S, context }),
-      orderableDocumentListDeskItem({ type: "collection", title: "Photo collections", icon: FolderIcon, S, context }),
+      orderableDocumentListDeskItem({ type: "collection", title: "Shoots / series", icon: FolderIcon, S, context }),
       orderableDocumentListDeskItem({ type: "video", title: "Videos", icon: PlayIcon, S, context }),
       orderableDocumentListDeskItem({ type: "release", title: "Music releases", icon: MicrophoneIcon, S, context }),
     ]);

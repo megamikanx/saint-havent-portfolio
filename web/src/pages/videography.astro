@@ -1,6 +1,10 @@
 ---
+/**
+ * Videography (the Figma's stacked-box layout, as on "Sound Design"): each
+ * video is a large click-to-play facade box with its title and description below.
+ */
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageIntro from "../components/PageIntro.astro";
+import PageFrame from "../components/PageFrame.astro";
 import VideoFacade from "../components/VideoFacade.astro";
 import { getPage, getVideos } from "../lib/content.ts";
 import { t } from "../i18n/index.ts";
@@ -9,20 +13,22 @@ const page = await getPage("videography");
 const videos = await getVideos();
 ---
 
-<BaseLayout title={page.heading} description={page.seoDescription ?? page.intro}>
-  <PageIntro page={page} />
-  <div class="container">
+<BaseLayout title={page.heading} description={page.seoDescription ?? page.intro} cornerStamp footerStamp={false}>
+  <PageFrame title={page.heading} zh={t("decor.page.videography")}>
+    {page.intro && <p class="stack-intro">{page.intro}</p>}
     {videos.length === 0 && <p class="empty">{t("video.empty")}</p>}
-    <ul class="video-list">
+    <ul class="stack stack--spacious">
       {
         videos.map((video) => (
-          <li class="video">
+          <li class="stack__item">
             <VideoFacade video={video} />
-            <h2 class="video__title">{video.title}</h2>
-            {video.description && <p class="video__description">{video.description}</p>}
+            <div class="stack__text">
+              <h2 class="stack__title">{video.title}</h2>
+              {video.description && <p>{video.description}</p>}
+            </div>
           </li>
         ))
       }
     </ul>
-  </div>
+  </PageFrame>
 </BaseLayout>

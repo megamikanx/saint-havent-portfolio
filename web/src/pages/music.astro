@@ -1,6 +1,10 @@
 ---
+/**
+ * Music (the Figma's stacked layout, as on "Band"): each release stacked down
+ * the centre column with its cover, title, year and click-to-load player.
+ */
 import BaseLayout from "../layouts/BaseLayout.astro";
-import PageIntro from "../components/PageIntro.astro";
+import PageFrame from "../components/PageFrame.astro";
 import ReleaseCard from "../components/ReleaseCard.astro";
 import { getPage, getReleases } from "../lib/content.ts";
 import { t } from "../i18n/index.ts";
@@ -9,18 +13,18 @@ const page = await getPage("music");
 const releases = await getReleases();
 ---
 
-<BaseLayout title={page.heading} description={page.seoDescription ?? page.intro} shareImage={releases[0]?.cover}>
-  <PageIntro page={page} />
-  <div class="container">
+<BaseLayout title={page.heading} description={page.seoDescription ?? page.intro} shareImage={releases[0]?.cover} cornerStamp footerStamp={false}>
+  <PageFrame title={page.heading} zh={t("decor.page.music")}>
+    {page.intro && <p class="stack-intro">{page.intro}</p>}
     {releases.length === 0 && <p class="empty">{t("music.empty")}</p>}
-    <ul class="release-list">
+    <ul class="stack">
       {
         releases.map((release) => (
-          <li>
+          <li class="stack__item">
             <ReleaseCard release={release} />
           </li>
         ))
       }
     </ul>
-  </div>
+  </PageFrame>
 </BaseLayout>
