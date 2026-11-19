@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 10, "column": 0}, "map": {"version":3,"sources":["file:///Users/stephaniemin/Desktop/personal/projects/saint-havent-portfolio/app/about/page.tsx"],"sourcesContent":["export default function About() {\n    return (\n        <main>\n            <h1>About</h1>\n            <p>Bio and photos go here</p>\n        </main>\n    );\n}"],"names":["About"],"mappings":";;;;;;AAAe,SAASA;IACpB,qBACI,8OAAC;;0BACG,8OAAC;0BAAG;;;;;;0BACJ,8OAAC;0BAAE;;;;;;;;;;;;AAGf"}},
+    {"offset": {"line": 51, "column": 0}, "map": {"version":3,"sources":["file:///Users/stephaniemin/Desktop/personal/projects/saint-havent-portfolio/app/favicon.ico.mjs%20(structured%20image%20object)"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 256, height: 256 }\n"],"names":["src","width","height"],"mappings":";;;;AAAA;;uCACe;IAAEA,KAAAA,mIAAG;IAAEC,OAAO;IAAKC,QAAQ;AAAI"}}]
+}
