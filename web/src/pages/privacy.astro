@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageFrame from "../components/PageFrame.astro";
 import PortableText from "../components/PortableText.astro";
 import { getPrivacyPage } from "../lib/content.ts";
 import { t } from "../i18n/index.ts";
@@ -11,11 +12,8 @@ const updated = page.updated
 ---
 
 <BaseLayout title={page.heading} description={page.seoDescription}>
-  <article class="container container--narrow">
-    <header class="page-intro">
-      <h1>{page.heading}</h1>
-      {updated && <p class="muted">{t("privacy.updated")} <time datetime={page.updated}>{updated}</time></p>}
-    </header>
+  <PageFrame title={page.heading} zh={t("decor.page.privacy")} narrow>
+    {updated && <p class="muted">{t("privacy.updated")} <time datetime={page.updated}>{updated}</time></p>}
     <PortableText value={page.body} />
-  </article>
+  </PageFrame>
 </BaseLayout>

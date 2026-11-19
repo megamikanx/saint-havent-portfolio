@@ -1,0 +1,41 @@
+---
+/**
+ * Inner-page layout from the Figma:
+ *
+ *   ┌──────────────┬──────────────────────────┬──────────────┐
+ *   │ [Title label]│                          │              │
+ *   │  vertical    │   centred content column │  (optional   │
+ *   │  Chinese     │   (stacked media + text) │   vertical   │
+ *   │  label       │                          │   slogan)    │
+ *   └──────────────┴──────────────────────────┴──────────────┘
+ *
+ * On narrow screens the side rails stack above the content and the slogan is hidden.
+ */
+import VerticalText from "./VerticalText.astro";
+import { t } from "../i18n/index.ts";
+
+type Props = {
+  /** Page title: the black label with red text, and the page's <h1>. */
+  title: string;
+  /** Vertical Chinese label under the title (decorative). */
+  zh?: string;
+  /** Show the vertical slogan column on the right (Photography in the Figma). */
+  slogan?: boolean;
+  /** Narrower content column, e.g. for the privacy policy. */
+  narrow?: boolean;
+};
+const { title, zh, slogan = false, narrow = false } = Astro.props;
+---
+
+<div class="page-frame">
+  <div class="page-frame__rail">
+    <h1 class="title-label">{title}</h1>
+    {zh && <VerticalText text={zh} class="vertical-text--page" />}
+  </div>
+  <div class:list={["page-frame__content", { "page-frame__content--narrow": narrow }]}>
+    <slot />
+  </div>
+  <div class="page-frame__aside">
+    {slogan && <VerticalText text={t("decor.slogan")} class="vertical-text--slogan" />}
+  </div>
+</div>

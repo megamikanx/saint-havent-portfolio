@@ -1,8 +1,8 @@
 ---
 /**
- * A music release: cover, title, year, and a click-to-load Bandcamp player.
- * The artist can paste either a Bandcamp URL or the embed code; both are
- * turned into a player at build time.
+ * A music release in the stacked layout: cover, then title, year and a
+ * click-to-load Bandcamp player. The artist can paste either a Bandcamp URL
+ * or the embed code; both are turned into a player at build time.
  */
 import Img from "./Img.astro";
 import { bandcampEmbedUrl, resolveBandcamp } from "../lib/embeds.ts";
@@ -19,21 +19,22 @@ const link = embed?.url ?? (release.bandcamp.startsWith("http") ? release.bandca
 <article class="release">
   {
     release.cover && (
-      <Img image={release.cover} aspect={1} sizes="(min-width: 700px) 320px, 100vw" widths={[320, 480, 640, 960]} class="release__cover" />
+      <div class="stack__media stack__media--square">
+        <Img image={release.cover} aspect={1} sizes="(min-width: 700px) 520px, 100vw" widths={[320, 520, 780, 1040]} />
+      </div>
     )
   }
-  <div class="release__body">
-    <h2 class="release__title">{release.title}</h2>
+  <div class="stack__text">
+    <h2 class="stack__title">{release.title}</h2>
     {release.year && <p class="release__year">{release.year}</p>}
-
     {
-      embed ? (
+      embed && (
         <div class="facade facade--bandcamp" data-facade>
           <button type="button" class="button" data-embed={bandcampEmbedUrl(embed)} data-title={release.title}>
             <span aria-hidden="true">▶</span> {t("music.play", { title: release.title })}
           </button>
         </div>
-      ) : null
+      )
     }
     {
       link && (

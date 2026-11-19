@@ -1,67 +1,101 @@
 ---
 /**
- * Site header with the main navigation. On small screens the links collapse
- * behind a Menu button (only when JavaScript is available; without JS the
- * links simply wrap, so navigation always works).
+ * Site header (layout from the Figma):
+ * - centred logo (uploaded in Sanity, or the site title as a text stamp)
+ * - optional red stamp square in the top-right corner (decorative)
+ * - full-width red nav bar: About / Works ▾ / Contact, each with its Chinese
+ *   label overlaid (decorative, hidden from screen readers)
+ *
+ * Works is a native <details> dropdown so it opens on click/tap and keyboard
+ * without JavaScript. A small script closes it on Escape or outside click.
  */
+import Img from "./Img.astro";
 import { t, type UIKey } from "../i18n/index.ts";
+import type { SiteSettings } from "../lib/types.ts";
 
-type Props = { siteTitle: string };
-const { siteTitle } = Astro.props;
+type Props = { settings: SiteSettings; cornerStamp?: boolean };
+const { settings, cornerStamp = false } = Astro.props;
 
-const links: { href: string; label: UIKey }[] = [
-  { href: "/about/", label: "nav.about" },
+const works: { href: string; label: UIKey }[] = [
   { href: "/photography/", label: "nav.photography" },
   { href: "/videography/", label: "nav.videography" },
   { href: "/music/", label: "nav.music" },
-  { href: "/contact/", label: "nav.contact" },
 ];
 
-const current = Astro.url.pathname.replace(/\/?$/, "/");
+const path = Astro.url.pathname.replace(/\/?$/, "/");
+const isCurrent = (href: string) => path === href;
+const inWorks = works.some((w) => path.startsWith(w.href));
+// Split "Double Happiness" onto two lines for the text logo, like the stamp in the Figma.
+const titleLines = settings.title.split(/\s+/);
 ---
 
 <header class="site-header">
-  <div class="site-header__inner container">
-    <a href="/" class="site-title" aria-current={current === "/" ? "page" : undefined}>{siteTitle}</a>
-
-    <nav aria-label={t("nav.label")} class="site-nav">
-      <button type="button" class="site-nav__toggle" aria-expanded="false" aria-controls="site-nav-list" hidden>
-        {t("nav.menu")}
-      </button>
-      <ul id="site-nav-list" class="site-nav__list">
-        {
-          links.map((link) => (
-            <li>
-              <a href={link.href} aria-current={current === link.href ? "page" : undefined}>
-                {t(link.label)}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-  </div>
+  <a href="/" class="logo" aria-label={`${settings.title}, ${t("nav.home")}`}>
+    {
+      settings.logo ? (
+        <Img image={settings.logo} alt="" sizes="260px" widths={[260, 520]} loading="eager" class="logo__image" />
+      ) : (
+        <span class="logo__stamp" aria-hidden="true">
+          {titleLines.map((line) => <span class="logo__line">{line}</span>)}
+        </span>
+      )
+    }
+  </a>
+  {cornerStamp && <span class="stamp stamp--corner" aria-hidden="true" />}
 </header>
 
-<script>
-  // Enhance the nav into a toggle on small screens.
-  const toggle = document.querySelector<HTMLButtonElement>(".site-nav__toggle");
-  const list = document.getElementById("site-nav-list");
-  if (toggle && list) {
-    toggle.hidden = false;
-    document.documentElement.classList.add("has-nav-toggle");
+<nav class="nav-bar" aria-label={t("nav.label")}>
+  <ul class="nav-bar__list">
+    <li>
+      <a href="/about/" class="nav-bar__link" aria-current={isCurrent("/about/") ? "page" : undefined}>
+        <span class="nav-bar__zh" aria-hidden="true">{t("decor.nav.about")}</span>
+        <span class="nav-bar__en">{t("nav.about")}</span>
+      </a>
+    </li>
+    <li class="nav-works">
+      <details class="nav-works__details" data-works-menu>
+        <summary class:list={["nav-bar__link", { "is-active": inWorks }]}>
+          <span class="nav-bar__zh" aria-hidden="true">{t("decor.nav.works")}</span>
+          <span class="nav-bar__en">{t("nav.works")}</span>
+        </summary>
+        <ul class="nav-works__menu">
+          {
+            works.map((w) => (
+              <li>
+                <a href={w.href} aria-current={path.startsWith(w.href) ? "page" : undefined}>
+                  {t(w.label)}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
+    </li>
+    <li>
+      <a href="/contact/" class="nav-bar__link" aria-current={isCurrent("/contact/") ? "page" : undefined}>
+        <span class="nav-bar__zh" aria-hidden="true">{t("decor.nav.contact")}</span>
+        <span class="nav-bar__en">{t("nav.contact")}</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 
-    const setOpen = (open: boolean) => {
-      toggle.setAttribute("aria-expanded", String(open));
-      list.classList.toggle("is-open", open);
-    };
-    toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
-    // Escape closes the menu and returns focus to the button.
-    list.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        setOpen(false);
-        toggle.focus();
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>("[data-works-menu]");
+  if (menu) {
+    // Escape closes the dropdown and returns focus to "Works".
+    menu.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && menu.open) {
+        menu.open = false;
+        menu.querySelector("summary")?.focus();
       }
+    });
+    // Clicking or tabbing elsewhere closes it.
+    document.addEventListener("click", (e) => {
+      if (menu.open && !menu.contains(e.target as Node)) menu.open = false;
+    });
+    menu.addEventListener("focusout", (e) => {
+      if (menu.open && !menu.contains(e.relatedTarget as Node | null)) menu.open = false;
     });
   }
 </script>

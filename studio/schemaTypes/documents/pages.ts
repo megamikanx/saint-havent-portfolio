@@ -25,7 +25,29 @@ function simplePage(name: string, title: string, icon: ComponentType) {
   });
 }
 
-export const homePage = simplePage("homePage", "Home page", HomeIcon);
+export const homePage = defineType({
+  name: "homePage",
+  title: "Home page",
+  type: "document",
+  icon: HomeIcon,
+  fields: [
+    ...pageFields(),
+    defineField({
+      name: "featuredImages",
+      title: "Featured photos",
+      description:
+        "The two photos side by side at the top of the home page (left, then right). Drag to swap them. If empty, your first two photos are used.",
+      type: "array",
+      of: [
+        defineArrayMember(
+          imageWithAlt({ name: "image", title: "Photo", description: "Click the crop icon to choose the focal point." }),
+        ),
+      ],
+      validation: (rule) => rule.max(2),
+    }),
+  ],
+  preview: { prepare: () => ({ title: "Home page" }) },
+});
 export const photographyPage = simplePage("photographyPage", "Photography page", ImagesIcon);
 export const videographyPage = simplePage("videographyPage", "Videography page", PlayIcon);
 export const musicPage = simplePage("musicPage", "Music page", MusicIcon);

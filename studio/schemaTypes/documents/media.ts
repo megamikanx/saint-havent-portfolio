@@ -14,7 +14,7 @@ import { isSupportedBandcamp, isSupportedVideoUrl } from "../lib/embeds";
 
 export const collection = defineType({
   name: "collection",
-  title: "Photo collection",
+  title: "Shoot / series",
   type: "document",
   icon: FolderIcon,
   orderings: [orderRankOrdering],
@@ -22,19 +22,36 @@ export const collection = defineType({
     orderRankField({ type: "collection" }),
     defineField({
       name: "title",
-      title: "Collection name",
-      description: "Shown as a heading above the photos on the Photography page, e.g. \"Tour 2026\" or \"Portraits\".",
+      title: "Shoot / series name",
+      description: "The name of this shoot or series, e.g. \"Tour 2026\" or \"Portraits\". Shown on its own page.",
       type: "string",
       validation: (rule) => rule.required().max(80),
     }),
     defineField({
+      name: "slug",
+      title: "Page address",
+      description: "The end of this shoot's web address, e.g. /photography/tour-2026. Click Generate to make it from the name.",
+      type: "slug",
+      options: { source: "title", maxLength: 80 },
+      validation: (rule) => rule.required(),
+    }),
+    imageWithAlt({
+      name: "cover",
+      title: "Cover photo",
+      description:
+        "The large photo for this shoot on the Photography page. Wide (landscape) photos work best. If empty, the shoot's first photo is used.",
+    }),
+    defineField({
       name: "description",
       title: "Description",
-      description: "Optional. A sentence or two about the series, shown under its name.",
+      description: "Optional. A short paragraph about the shoot, shown under its cover photo.",
       type: "text",
-      rows: 3,
+      rows: 4,
     }),
   ],
+  preview: {
+    select: { title: "title", media: "cover" },
+  },
 });
 
 export const photo = defineType({
@@ -61,8 +78,8 @@ export const photo = defineType({
     }),
     defineField({
       name: "collection",
-      title: "Collection",
-      description: "Optional. Group this photo into a series. Photos without a collection appear at the end of the Photography page.",
+      title: "Shoot / series",
+      description: "Which shoot or series this photo belongs to. Photos without one appear in a \"More work\" gallery at the end of the Photography page.",
       type: "reference",
       to: [{ type: "collection" }],
     }),

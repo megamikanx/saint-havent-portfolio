@@ -1,21 +1,21 @@
 ---
+/**
+ * Footer (layout from the Figma): small centred © line with the red stamp
+ * square underneath. Social links and the Privacy Policy link sit above it.
+ */
 import { t } from "../i18n/index.ts";
 import type { SiteSettings } from "../lib/types.ts";
 import SocialLinks from "./SocialLinks.astro";
 
-type Props = { settings: SiteSettings };
-const { settings } = Astro.props;
+type Props = { settings: SiteSettings; stamp?: boolean };
+const { settings, stamp = true } = Astro.props;
 ---
 
 <footer class="site-footer">
-  <div class="container site-footer__inner">
-    <nav aria-label={t("footer.social")}>
-      <SocialLinks links={settings.socialLinks} />
-    </nav>
-    <p class="site-footer__meta">
-      <a href="/privacy/">{t("footer.privacy")}</a>
-      <span aria-hidden="true">·</span>
-      {t("footer.copyright", { year: new Date().getFullYear(), name: settings.title })}
-    </p>
-  </div>
+  <nav aria-label={t("footer.social")}>
+    <SocialLinks links={settings.socialLinks} />
+  </nav>
+  <p class="site-footer__privacy"><a href="/privacy/">{t("footer.privacy")}</a></p>
+  <p class="site-footer__copyright">{t("footer.copyright", { year: new Date().getFullYear(), name: settings.ownerName })}</p>
+  {stamp && <span class="stamp" aria-hidden="true" />}
 </footer>

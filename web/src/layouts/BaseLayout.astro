@@ -19,10 +19,21 @@ type Props = {
   /** Page-specific share image. Falls back to the default from Site settings. */
   shareImage?: ImageRef;
   noindex?: boolean;
+  /** Red stamp square in the header's top-right corner (Works pages in the Figma). */
+  cornerStamp?: boolean;
+  /** Red stamp square under the footer's © line. */
+  footerStamp?: boolean;
 };
 
 const settings = await getSiteSettings();
-const { title, description = settings.description, shareImage = settings.shareImage, noindex = false } = Astro.props;
+const {
+  title,
+  description = settings.description,
+  shareImage = settings.shareImage,
+  noindex = false,
+  cornerStamp = false,
+  footerStamp = true,
+} = Astro.props;
 
 const fullTitle = title ? `${title} — ${settings.title}` : settings.title;
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -69,11 +80,11 @@ const analyticsToken = import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN;
   </head>
   <body>
     <a class="skip-link" href="#main">{t("site.skipLink")}</a>
-    <Header siteTitle={settings.title} />
+    <Header settings={settings} cornerStamp={cornerStamp} />
     <main id="main" tabindex="-1">
       <slot />
     </main>
-    <Footer settings={settings} />
+    <Footer settings={settings} stamp={footerStamp} />
 
     {
       analyticsToken && (

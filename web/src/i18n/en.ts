@@ -8,13 +8,29 @@
 export const en = {
   "site.skipLink": "Skip to main content",
   "nav.label": "Main",
-  "nav.menu": "Menu",
   "nav.home": "Home",
+  "nav.works": "Works",
   "nav.about": "About",
   "nav.photography": "Photography",
   "nav.videography": "Videography",
   "nav.music": "Music",
   "nav.contact": "Contact",
+
+  /*
+   * Chinese text that is part of the visual design (from the Figma), not a
+   * translation. Decorative only: hidden from screen readers.
+   */
+  "decor.nav.about": "关于",
+  "decor.nav.works": "作品",
+  "decor.nav.contact": "联系方式",
+  "decor.page.about": "关于",
+  "decor.page.photography": "摄影",
+  "decor.page.videography": "视频",
+  "decor.page.music": "音乐",
+  "decor.page.contact": "联系方式",
+  "decor.page.privacy": "隐私",
+  "decor.slogan": "我就得你得要去死",
+  "decor.footerWord": "大地",
 
   "footer.social": "Social links",
   "footer.privacy": "Privacy Policy",
@@ -24,6 +40,8 @@ export const en = {
   "photo.open": "Open photo: {alt}",
   "photo.empty": "Photos are coming soon.",
   "photo.otherWork": "More work",
+  "photo.viewShoot": "View {title}",
+  "photo.back": "All photography",
   "lightbox.label": "Photo viewer",
   "lightbox.close": "Close",
   "lightbox.previous": "Previous photo",
@@ -39,6 +57,7 @@ export const en = {
 
   "about.portraitFallbackAlt": "Portrait",
 
+  "contact.heading": "Contact",
   "contact.name": "Name",
   "contact.email": "Email",
   "contact.enquiryType": "Enquiry type",
@@ -49,7 +68,7 @@ export const en = {
   "contact.enquiryType.other": "Other",
   "contact.message": "Message",
   "contact.required": "required",
-  "contact.submit": "Send message",
+  "contact.submit": "Submit",
   "contact.sending": "Sending…",
   "contact.privacyNote": "We only use your details to reply to you. See our {link}.",
   "contact.success.heading": "Thanks — your message has been sent.",

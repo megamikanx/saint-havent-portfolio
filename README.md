@@ -20,7 +20,8 @@ The goal is **$0/month apart from the domain**. There is no database: enquiries 
 ```
 web/                     Astro website
   src/pages/             One file per page (Home, About, Photography, Videography, Music, Contact, Privacy, 404)
-  src/components/        Header, Footer, Img, PhotoGallery (+ lightbox), VideoFacade, ReleaseCard, ContactForm…
+  src/components/        Header (logo + red nav bar + Works dropdown), PageFrame (Figma inner-page layout), Footer,
+                         Img, PhotoGallery (+ lightbox), VideoFacade, ReleaseCard, ContactForm…
   src/lib/content.ts     All Sanity queries; falls back to placeholders.ts when Sanity isn't set up
   src/lib/embeds.ts      Parses YouTube/Vimeo URLs and Bandcamp links/embed codes into players
   src/lib/contact.ts     Contact form validation, shared by the browser and the server
@@ -197,6 +198,10 @@ For stronger rate limiting, add a free Cloudflare rule once the domain is on Clo
 The notification address can be changed by the artist in Sanity (Site settings → Contact form email address). On Sanity's free plan datasets are public, so this address can be read through Sanity's API. If that's a concern, leave the Sanity field empty and use `ARTIST_NOTIFICATION_EMAIL` only.
 
 ---
+
+## Layout
+
+The page layout follows the Figma: centred stamp logo, full-width red nav bar (About / Works ▾ / Contact with Chinese labels), inner pages with a black title label and large vertical Chinese characters on the left and a centred ~1080px column of stacked media boxes, and a home page with a yellow band, two side-by-side photos and vertical slogan columns. Keep this layout when making changes. Fonts and colours are tokens at the top of `web/src/styles/global.css` and will be refined later.
 
 ## Performance and accessibility notes
 

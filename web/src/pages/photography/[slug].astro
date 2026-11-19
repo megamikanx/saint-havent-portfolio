@@ -1,0 +1,29 @@
+---
+/**
+ * One shoot's gallery: responsive grid of its photos, each opening the
+ * accessible lightbox. Uses the same frame as the other inner pages.
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageFrame from "../../components/PageFrame.astro";
+import PhotoGallery from "../../components/PhotoGallery.astro";
+import { getPhotos } from "../../lib/content.ts";
+import { t } from "../../i18n/index.ts";
+
+export async function getStaticPaths() {
+  const { collections, photos } = await getPhotos();
+  return collections.map((shoot) => ({
+    params: { slug: shoot.slug },
+    props: { shoot, photos: photos.filter((p) => p.collectionId === shoot._id) },
+  }));
+}
+
+const { shoot, photos } = Astro.props;
+---
+
+<BaseLayout title={shoot.title} description={shoot.description} shareImage={shoot.cover} cornerStamp footerStamp={false}>
+  <PageFrame title={shoot.title} zh={t("decor.page.photography")}>
+    {shoot.description && <p class="stack-intro">{shoot.description}</p>}
+    {photos.length > 0 ? <PhotoGallery photos={photos} galleryId={shoot.slug} eagerFirst /> : <p class="empty">{t("photo.empty")}</p>}
+    <p class="back-link"><a href="/photography/">← {t("photo.back")}</a></p>
+  </PageFrame>
+</BaseLayout>

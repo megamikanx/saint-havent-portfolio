@@ -31,6 +31,13 @@ export const siteSettings = defineType({
       validation: (rule) => rule.required().max(60),
     }),
     defineField({
+      name: "ownerName",
+      title: "Your name (for the © line)",
+      description: "Shown in the footer of every page, e.g. \"© 2026 Joel Goh\". If empty, the site title is used.",
+      type: "string",
+      validation: (rule) => rule.max(60),
+    }),
+    defineField({
       name: "description",
       title: "Default search engine description",
       description:
@@ -38,6 +45,12 @@ export const siteSettings = defineType({
       type: "text",
       rows: 3,
       validation: (rule) => rule.required().max(160).warning("Search engines cut descriptions off after about 160 characters."),
+    }),
+    imageWithAlt({
+      name: "logo",
+      title: "Logo",
+      description:
+        "Optional. Your logo, shown at the top of every page. A transparent PNG or SVG works best. If empty, the site title is shown instead.",
     }),
     imageWithAlt({
       name: "shareImage",

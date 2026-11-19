@@ -3,7 +3,7 @@
  * Safe to edit or delete entries once real content exists.
  */
 import type { PortableTextBlock } from "@portabletext/types";
-import type { AboutPage, ImageRef, PageContent, PageKey, Photo, PrivacyPage, Release, SiteSettings, Video } from "./types.ts";
+import type { AboutPage, Collection, ImageRef, PageContent, PageKey, Photo, PrivacyPage, Release, SiteSettings, Video } from "./types.ts";
 
 const img = (name: string, width: number, height: number, alt: string): ImageRef => ({
   kind: "local",
@@ -27,9 +27,13 @@ export function blocks(...paragraphs: string[]): PortableTextBlock[] {
   });
 }
 
+const LOREM =
+  "Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
+
 export const settings: SiteSettings = {
-  title: "Saint Haven't",
-  description: "Photography, videography and music by Saint Haven't.",
+  title: "Double Happiness",
+  ownerName: "Joel Goh",
+  description: "Photography, videography and music by Joel Goh.",
   socialLinks: [
     { platform: "instagram", url: "https://instagram.com/" },
     { platform: "bandcamp", url: "https://fujideathcult.bandcamp.com/" },
@@ -37,7 +41,7 @@ export const settings: SiteSettings = {
 };
 
 export const pages: Record<PageKey, PageContent> = {
-  home: { heading: "Saint Haven't", intro: "Photographer, filmmaker and musician." },
+  home: { heading: "Double Happiness", intro: LOREM },
   about: { heading: "About", intro: "A little about me and my work." },
   photography: { heading: "Photography", intro: "Selected shoots and series." },
   videography: { heading: "Videography", intro: "Music videos, short films and visual work." },
@@ -54,13 +58,18 @@ export const about: AboutPage = {
   portrait: img("portrait", 800, 1000, "Placeholder portrait"),
 };
 
+export const collections: Collection[] = [
+  { _id: "c1", title: "First photoshoot", slug: "first-photoshoot", description: LOREM, cover: img("shoot-1", 2080, 1000, "Placeholder cover for the first photoshoot") },
+  { _id: "c2", title: "Second photoshoot", slug: "second-photoshoot", description: LOREM, cover: img("shoot-2", 2080, 1000, "Placeholder cover for the second photoshoot") },
+];
+
 export const photos: Photo[] = [
-  { _id: "p1", image: img("photo-1", 1200, 1500, "Placeholder photo 1"), caption: "Placeholder caption" },
-  { _id: "p2", image: img("photo-2", 1500, 1000, "Placeholder photo 2") },
-  { _id: "p3", image: img("photo-3", 1200, 1200, "Placeholder photo 3") },
-  { _id: "p4", image: img("photo-4", 1000, 1500, "Placeholder photo 4"), caption: "Another placeholder caption" },
-  { _id: "p5", image: img("photo-5", 1500, 1000, "Placeholder photo 5") },
-  { _id: "p6", image: img("photo-6", 1200, 1500, "Placeholder photo 6") },
+  { _id: "p1", image: img("photo-1", 1200, 1500, "Placeholder photo 1"), caption: "Placeholder caption", collectionId: "c1" },
+  { _id: "p2", image: img("photo-2", 1500, 1000, "Placeholder photo 2"), collectionId: "c1" },
+  { _id: "p3", image: img("photo-3", 1200, 1200, "Placeholder photo 3"), collectionId: "c1" },
+  { _id: "p4", image: img("photo-4", 1000, 1500, "Placeholder photo 4"), caption: "Another placeholder caption", collectionId: "c2" },
+  { _id: "p5", image: img("photo-5", 1500, 1000, "Placeholder photo 5"), collectionId: "c2" },
+  { _id: "p6", image: img("photo-6", 1200, 1500, "Placeholder photo 6"), collectionId: "c2" },
 ];
 
 // No placeholder videos: the page shows its empty state until one is added in the Studio.

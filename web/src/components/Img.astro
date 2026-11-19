@@ -52,8 +52,13 @@ if (image.kind === "sanity") {
   src = image.src;
 }
 
+// Enforce the crop ratio in CSS too, so local placeholders (and any image
+// whose file differs from its metadata) fill the layout box exactly.
 const placeholderStyle =
-  image.kind === "sanity" && image.lqip ? `background-image:url(${image.lqip});background-size:cover;` : undefined;
+  [
+    aspect ? `aspect-ratio:${aspect};object-fit:cover;` : "",
+    image.kind === "sanity" && image.lqip ? `background-image:url(${image.lqip});background-size:cover;` : "",
+  ].join("") || undefined;
 ---
 
 <img

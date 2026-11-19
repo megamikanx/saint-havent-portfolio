@@ -1,55 +1,63 @@
 ---
+/**
+ * Home (layout from the Figma): a yellow band behind two side-by-side photos
+ * (the left one larger), vertical Chinese slogan columns down both sides, and
+ * the intro/bio text centred underneath.
+ */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Img from "../components/Img.astro";
-import { getPage, getPhotos } from "../lib/content.ts";
+import VerticalText from "../components/VerticalText.astro";
+import { getHomePage } from "../lib/content.ts";
 import { t } from "../i18n/index.ts";
 
-const page = await getPage("home");
-const { photos } = await getPhotos();
-// The home page features the first few photos in the artist's chosen order.
-const [hero, ...rest] = photos;
-const featured = rest.slice(0, 4);
+const page = await getHomePage();
+const [left, right] = page.featuredImages;
+const slogan = t("decor.slogan");
 ---
 
-<BaseLayout description={page.seoDescription ?? page.intro}>
-  <section class="home-hero container">
-    <div class="home-hero__text">
-      <h1>{page.heading}</h1>
-      {page.intro && <p class="lede">{page.intro}</p>}
-      <ul class="home-links">
-        <li><a href="/photography/">{t("nav.photography")}</a></li>
-        <li><a href="/videography/">{t("nav.videography")}</a></li>
-        <li><a href="/music/">{t("nav.music")}</a></li>
-      </ul>
+<BaseLayout description={page.seoDescription ?? page.intro} shareImage={left}>
+  <h1 class="visually-hidden">{page.heading}</h1>
+
+  <section class="home">
+    <div class="home__band" aria-hidden="true"></div>
+
+    <div class="home__rail home__rail--left">
+      <VerticalText text={slogan} class="vertical-text--slogan" />
+      <VerticalText text={slogan} class="vertical-text--slogan home__slogan-offset" />
     </div>
-    {
-      hero && (
-        <Img
-          image={hero.image}
-          aspect={4 / 5}
-          sizes="(min-width: 900px) 50vw, 100vw"
-          widths={[480, 720, 960, 1280, 1600]}
-          loading="eager"
-          fetchpriority="high"
-          class="home-hero__image"
-        />
-      )
-    }
+
+    <div class="home__photos">
+      {
+        left && (
+          <Img
+            image={left}
+            aspect={520 / 628}
+            sizes="(min-width: 1200px) 520px, 54vw"
+            widths={[400, 520, 780, 1040]}
+            loading="eager"
+            fetchpriority="high"
+            class="home__photo home__photo--large"
+          />
+        )
+      }
+      {
+        right && (
+          <Img
+            image={right}
+            aspect={423 / 512}
+            sizes="(min-width: 1200px) 423px, 44vw"
+            widths={[320, 423, 640, 846]}
+            loading="eager"
+            class="home__photo home__photo--small"
+          />
+        )
+      }
+    </div>
+
+    <div class="home__rail home__rail--right">
+      <VerticalText text={slogan} class="vertical-text--slogan" />
+    </div>
   </section>
 
-  {
-    featured.length > 0 && (
-      <section class="container home-featured" aria-label={t("nav.photography")}>
-        <ul class="home-featured__grid">
-          {featured.map((photo) => (
-            <li>
-              <a href="/photography/">
-                <Img image={photo.image} aspect={1} sizes="(min-width: 900px) 25vw, 50vw" widths={[320, 480, 640, 800]} />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
+  {page.intro && <p class="home__bio">{page.intro}</p>}
 </BaseLayout>

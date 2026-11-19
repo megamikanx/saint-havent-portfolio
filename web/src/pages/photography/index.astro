@@ -1,0 +1,66 @@
+---
+/**
+ * Photography (the Figma's "photoshoots" page): each shoot is a large cover
+ * box with its description underneath, stacked down the centre column.
+ * Clicking a shoot opens its gallery (/photography/[slug]) with the lightbox.
+ * Photos not in any shoot appear in a "More work" gallery at the end.
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageFrame from "../../components/PageFrame.astro";
+import PhotoGallery from "../../components/PhotoGallery.astro";
+import Img from "../../components/Img.astro";
+import { getPage, getPhotos } from "../../lib/content.ts";
+import { t } from "../../i18n/index.ts";
+
+const page = await getPage("photography");
+const { collections, photos } = await getPhotos();
+const shoots = collections.filter((c) => c.cover);
+const ungrouped = photos.filter((p) => !collections.some((c) => c._id === p.collectionId));
+---
+
+<BaseLayout title={page.heading} description={page.seoDescription ?? page.intro} shareImage={shoots[0]?.cover ?? photos[0]?.image} cornerStamp footerStamp={false}>
+  <PageFrame title={page.heading} zh={t("decor.page.photography")} slogan>
+    {page.intro && <p class="stack-intro">{page.intro}</p>}
+    {shoots.length === 0 && ungrouped.length === 0 && <p class="empty">{t("photo.empty")}</p>}
+
+    <ul class="stack">
+      {
+        shoots.map((shoot, i) => (
+          <li class="stack__item">
+            <a href={`/photography/${shoot.slug}/`} class="stack__media" aria-label={t("photo.viewShoot", { title: shoot.title })}>
+              <Img
+                image={shoot.cover!}
+                alt=""
+                aspect={1080 / 520}
+                sizes="(min-width: 1500px) 1080px, (min-width: 900px) 70vw, 100vw"
+                widths={[640, 960, 1280, 1620, 2160]}
+                loading={i === 0 ? "eager" : "lazy"}
+                fetchpriority={i === 0 ? "high" : "auto"}
+              />
+            </a>
+            <div class="stack__text">
+              <h2 class="stack__title">
+                <a href={`/photography/${shoot.slug}/`}>{shoot.title}</a>
+              </h2>
+              {shoot.description && <p>{shoot.description}</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      ungrouped.length > 0 && (
+        <section class="stack-gallery" aria-labelledby="more-work">
+          <h2 id="more-work" class={shoots.length ? "stack__title" : "visually-hidden"}>{t("photo.otherWork")}</h2>
+          <PhotoGallery photos={ungrouped} galleryId="ungrouped" eagerFirst={shoots.length === 0} />
+        </section>
+      )
+    }
+  </PageFrame>
+
+  <div class="footer-word" aria-hidden="true">
+    <span class="footer-word__small">{t("decor.footerWord")}</span>
+    <span class="footer-word__large">{t("decor.footerWord")}</span>
+  </div>
+</BaseLayout>
