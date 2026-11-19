@@ -20,7 +20,7 @@ The goal is **$0/month apart from the domain**. There is no database: enquiries 
 ```
 web/                     Astro website
   src/pages/             One file per page (Home, About, Photography, Videography, Music, Contact, Privacy, 404)
-  src/components/        Header (logo + red nav bar + Works dropdown), PageFrame (Figma inner-page layout), Footer,
+  src/components/        Header (logo + nav bar + Works dropdown), PageFrame (Figma inner-page layout), Footer,
                          Img, PhotoGallery (+ lightbox), VideoFacade, ReleaseCard, ContactForm…
   src/lib/content.ts     All Sanity queries; falls back to placeholders.ts when Sanity isn't set up
   src/lib/embeds.ts      Parses YouTube/Vimeo URLs and Bandcamp links/embed codes into players
@@ -201,7 +201,9 @@ The notification address can be changed by the artist in Sanity (Site settings �
 
 ## Layout
 
-The page layout follows the Figma: centred stamp logo, full-width red nav bar (About / Works ▾ / Contact with Chinese labels), inner pages with a black title label and large vertical Chinese characters on the left and a centred ~1080px column of stacked media boxes, and a home page with a yellow band, two side-by-side photos and vertical slogan columns. Keep this layout when making changes. Fonts and colours are tokens at the top of `web/src/styles/global.css` and will be refined later.
+The page layout follows the Figma: centred logo, full-width nav bar (About / Works ▾ / Contact with Chinese labels), inner pages with a title label and large vertical Chinese characters on the left and a centred ~1080px column of stacked media boxes, and a home page with two side-by-side photos and vertical slogan columns. Keep this layout when making changes.
+
+The visual design isn't final, so everything is **black and white in Arial** for now. Colours and fonts are tokens at the top of `web/src/styles/global.css`.
 
 ## Performance and accessibility notes
 

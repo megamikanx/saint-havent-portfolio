@@ -1,8 +1,8 @@
 ---
 /**
- * Home (layout from the Figma): a yellow band behind two side-by-side photos
- * (the left one larger), vertical Chinese slogan columns down both sides, and
- * the intro/bio text centred underneath.
+ * Home (layout from the Figma): two side-by-side photos (the left one
+ * larger), vertical Chinese slogan columns down both sides, and the intro/bio
+ * text centred underneath.
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Img from "../components/Img.astro";
@@ -19,8 +19,6 @@ const slogan = t("decor.slogan");
   <h1 class="visually-hidden">{page.heading}</h1>
 
   <section class="home">
-    <div class="home__band" aria-hidden="true"></div>
-
     <div class="home__rail home__rail--left">
       <VerticalText text={slogan} class="vertical-text--slogan" />
       <VerticalText text={slogan} class="vertical-text--slogan home__slogan-offset" />
