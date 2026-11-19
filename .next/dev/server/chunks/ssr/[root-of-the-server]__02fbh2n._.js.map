@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 13, "column": 0}, "map": {"version":3,"sources":["file:///Users/stephaniemin/Desktop/personal/projects/saint-havent-portfolio/app/favicon.ico.mjs%20(structured%20image%20object)"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 256, height: 256 }\n"],"names":["src","width","height"],"mappings":";;;;AAAA;;uCACe;IAAEA,KAAAA,mIAAG;IAAEC,OAAO;IAAKC,QAAQ;AAAI"}},
-    {"offset": {"line": 28, "column": 0}, "map": {"version":3,"sources":["file:///Users/stephaniemin/Desktop/personal/projects/saint-havent-portfolio/app/page.tsx"],"sourcesContent":["export default function Home() {\n  return (\n    <main className=\"flex flex-1 flex-col\">\n      <section className=\"flex justify-center gap-6 px-8 py-10\">\n        <div className=\"h-[420px] w-[360px] border\" aria-hidden=\"true\" />\n        <div className=\"h-[340px] w-[280px] border\" aria-hidden=\"true\" />\n      </section>\n\n      <p className=\"mx-auto max-w-xl px-6 text-center\">\n        Lorem Ipsum blah blah blah bio goes here later.\n      </p>\n    </main>\n  );\n}\n"],"names":["Home","className"],"mappings":";;;;;;AAAe,SAASA;IACtB,qBACE,8OAAC;QAAKC,WAAU;;0BACd,8OAAC;gBAAQA,WAAU;;kCACjB,8OAAC;wBAAIA,WAAU;wBAA6B,eAAY;;;;;;kCACxD,8OAAC;wBAAIA,WAAU;wBAA6B,eAAY;;;;;;;;;;;;0BAG1D,8OAAC;gBAAEA,WAAU;0BAAoC;;;;;;;;;;;;AAKvD"}}]
-}
