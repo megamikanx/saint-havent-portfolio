@@ -1,0 +1,71 @@
+---
+/**
+ * Responsive image. For Sanity images it builds a srcset from Sanity's image
+ * pipeline (AVIF/WebP via auto=format) and always sets width/height so the
+ * layout doesn't shift while images load (CLS).
+ *
+ * - `aspect` (width / height) crops to that ratio around the artist's hotspot.
+ * - Use loading="eager" + fetchpriority="high" only for the main image above
+ *   the fold (the LCP image); everything else lazy-loads.
+ */
+import { sanityImageUrl } from "../lib/sanity.ts";
+import type { ImageRef } from "../lib/types.ts";
+
+type Props = {
+  image: ImageRef;
+  sizes: string;
+  widths?: number[];
+  aspect?: number;
+  loading?: "lazy" | "eager";
+  fetchpriority?: "high" | "auto";
+  class?: string;
+  /** Override alt text (e.g. "" for purely decorative use). */
+  alt?: string;
+};
+
+const {
+  image,
+  sizes,
+  widths = [400, 640, 960, 1280, 1600, 2000],
+  aspect,
+  loading = "lazy",
+  fetchpriority = "auto",
+  class: className,
+  alt = image.alt,
+} = Astro.props;
+
+const ratio = aspect ?? image.width / image.height;
+// Don't upscale: only offer widths up to the original file's width.
+const usable = widths.filter((w) => w <= image.width);
+const candidates = usable.length ? usable : [image.width];
+const largest = candidates[candidates.length - 1]!;
+const width = largest;
+const height = Math.round(largest / ratio);
+
+let src: string;
+let srcset: string | undefined;
+if (image.kind === "sanity") {
+  const url = (w: number) => sanityImageUrl(image.source, { width: w, height: aspect ? Math.round(w / aspect) : undefined });
+  srcset = candidates.map((w) => `${url(w)} ${w}w`).join(", ");
+  src = url(candidates[Math.min(2, candidates.length - 1)]!);
+} else {
+  src = image.src;
+}
+
+const placeholderStyle =
+  image.kind === "sanity" && image.lqip ? `background-image:url(${image.lqip});background-size:cover;` : undefined;
+---
+
+<img
+  src={src}
+  srcset={srcset}
+  sizes={srcset ? sizes : undefined}
+  width={width}
+  height={height}
+  alt={alt}
+  loading={loading}
+  decoding={loading === "eager" ? "auto" : "async"}
+  fetchpriority={fetchpriority}
+  class={className}
+  style={placeholderStyle}
+/>

@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PortableText from "../components/PortableText.astro";
+import { getPrivacyPage } from "../lib/content.ts";
+import { t } from "../i18n/index.ts";
+
+const page = await getPrivacyPage();
+const updated = page.updated
+  ? new Date(page.updated).toLocaleDateString("en-GB", { year: "numeric", month: "long", day: "numeric" })
+  : undefined;
+---
+
+<BaseLayout title={page.heading} description={page.seoDescription}>
+  <article class="container container--narrow">
+    <header class="page-intro">
+      <h1>{page.heading}</h1>
+      {updated && <p class="muted">{t("privacy.updated")} <time datetime={page.updated}>{updated}</time></p>}
+    </header>
+    <PortableText value={page.body} />
+  </article>
+</BaseLayout>

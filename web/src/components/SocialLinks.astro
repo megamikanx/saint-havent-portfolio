@@ -1,0 +1,41 @@
+---
+import { t } from "../i18n/index.ts";
+import type { SocialLink } from "../lib/types.ts";
+
+type Props = { links: SocialLink[]; class?: string };
+const { links, class: className } = Astro.props;
+
+// Display names for the platform values chosen in the Studio.
+const names: Record<string, string> = {
+  instagram: "Instagram",
+  youtube: "YouTube",
+  vimeo: "Vimeo",
+  bandcamp: "Bandcamp",
+  spotify: "Spotify",
+  appleMusic: "Apple Music",
+  soundcloud: "SoundCloud",
+  tiktok: "TikTok",
+  x: "X",
+  facebook: "Facebook",
+  email: "Email",
+};
+const labelFor = (l: SocialLink) => l.label || names[l.platform] || l.platform;
+---
+
+{
+  links.length > 0 && (
+    <ul class:list={["social-links", className]}>
+      {links.map((link) => {
+        const external = /^https?:\/\//.test(link.url);
+        return (
+          <li>
+            <a href={link.url} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+              {labelFor(link)}
+              {external && <span class="visually-hidden"> {t("footer.newTab")}</span>}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  )
+}

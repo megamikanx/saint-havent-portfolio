@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Img from "../components/Img.astro";
+import { getPage, getPhotos } from "../lib/content.ts";
+import { t } from "../i18n/index.ts";
+
+const page = await getPage("home");
+const { photos } = await getPhotos();
+// The home page features the first few photos in the artist's chosen order.
+const [hero, ...rest] = photos;
+const featured = rest.slice(0, 4);
+---
+
+<BaseLayout description={page.seoDescription ?? page.intro}>
+  <section class="home-hero container">
+    <div class="home-hero__text">
+      <h1>{page.heading}</h1>
+      {page.intro && <p class="lede">{page.intro}</p>}
+      <ul class="home-links">
+        <li><a href="/photography/">{t("nav.photography")}</a></li>
+        <li><a href="/videography/">{t("nav.videography")}</a></li>
+        <li><a href="/music/">{t("nav.music")}</a></li>
+      </ul>
+    </div>
+    {
+      hero && (
+        <Img
+          image={hero.image}
+          aspect={4 / 5}
+          sizes="(min-width: 900px) 50vw, 100vw"
+          widths={[480, 720, 960, 1280, 1600]}
+          loading="eager"
+          fetchpriority="high"
+          class="home-hero__image"
+        />
+      )
+    }
+  </section>
+
+  {
+    featured.length > 0 && (
+      <section class="container home-featured" aria-label={t("nav.photography")}>
+        <ul class="home-featured__grid">
+          {featured.map((photo) => (
+            <li>
+              <a href="/photography/">
+                <Img image={photo.image} aspect={1} sizes="(min-width: 900px) 25vw, 50vw" widths={[320, 480, 640, 800]} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</BaseLayout>

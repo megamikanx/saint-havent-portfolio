@@ -1,0 +1,41 @@
+---
+/**
+ * Lightweight stand-in for a YouTube/Vimeo player: a thumbnail and a play
+ * button. The real iframe (and all of YouTube/Vimeo's scripts) only loads
+ * after the visitor clicks, which keeps the page fast.
+ */
+import { parseVideoUrl, videoEmbedUrl, videoThumbnail } from "../lib/embeds.ts";
+import { t } from "../i18n/index.ts";
+import type { Video } from "../lib/types.ts";
+
+type Props = { video: Video };
+const { video } = Astro.props;
+
+const parsed = parseVideoUrl(video.url);
+const thumb = parsed ? await videoThumbnail(parsed, video.url) : null;
+---
+
+{
+  parsed ? (
+    <div class="facade facade--video" data-facade>
+      <button type="button" class="facade__button" data-embed={videoEmbedUrl(parsed)} data-title={video.title}>
+        {thumb && (
+          <img src={thumb.src} width={thumb.width} height={thumb.height} alt="" loading="lazy" decoding="async" class="facade__thumb" />
+        )}
+        <span class="facade__play" aria-hidden="true" />
+        <span class="visually-hidden">{t("video.play", { title: video.title })}</span>
+      </button>
+    </div>
+  ) : (
+    // The Studio validates URLs, but never break the build on a bad one.
+    <p>
+      <a href={video.url}>{video.title}</a>
+    </p>
+  )
+}
+
+<script>
+  // Replace the facade with the real player on click. Shared by music facades.
+  import { activateFacades } from "../lib/facade-client.ts";
+  activateFacades();
+</script>
