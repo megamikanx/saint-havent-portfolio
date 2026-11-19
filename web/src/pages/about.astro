@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Img from "../components/Img.astro";
+import PortableText from "../components/PortableText.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import { getAboutPage, getSiteSettings } from "../lib/content.ts";
+import { t } from "../i18n/index.ts";
+
+const page = await getAboutPage();
+const settings = await getSiteSettings();
+---
+
+<BaseLayout title={page.heading} description={page.seoDescription ?? page.intro} shareImage={page.portrait}>
+  <div class="about container">
+    {
+      page.portrait && (
+        <Img
+          image={page.portrait}
+          alt={page.portrait.alt || t("about.portraitFallbackAlt")}
+          aspect={4 / 5}
+          sizes="(min-width: 900px) 40vw, 100vw"
+          widths={[480, 720, 960, 1280]}
+          loading="eager"
+          fetchpriority="high"
+          class="about__portrait"
+        />
+      )
+    }
+    <div class="about__text">
+      <h1>{page.heading}</h1>
+      {page.intro && <p class="lede">{page.intro}</p>}
+      <PortableText value={page.bio} />
+      <SocialLinks links={settings.socialLinks} class="social-links--inline" />
+    </div>
+  </div>
+</BaseLayout>

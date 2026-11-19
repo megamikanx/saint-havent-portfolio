@@ -1,0 +1,25 @@
+{
+  "name": "saint-havent-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "wrangler pages dev ./dist",
+    "check": "astro check && tsc -p functions/tsconfig.json"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.6",
+    "@portabletext/to-html": "^6.0.0",
+    "@portabletext/types": "^4.0.2",
+    "@sanity/client": "^8.16.0",
+    "@sanity/image-url": "^2.2.0",
+    "astro": "^7.4.13"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@cloudflare/workers-types": "^5.20261119.1",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.165.0"
+  }
+}

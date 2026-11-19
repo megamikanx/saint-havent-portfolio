@@ -1,9 +1,8 @@
-i<!-- BEGIN:nextjs-agent-rules -->
+# Project notes for coding agents
 
-# This is NOT the Next.js you know
-
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
-
-This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
-
-<!-- END:nextjs-agent-rules -->
+- `web/` is an **Astro 7** static site (TypeScript). The contact form backend is a Cloudflare Pages Function in `web/functions/`. There is no server adapter: keep `output: "static"`.
+- `studio/` is a standalone **Sanity Studio** (v6), deployed to `*.sanity.studio`. It is not embedded in the website.
+- Each package has its own `package.json` and lock file. Run npm commands inside `web/` or `studio/`, not at the repo root.
+- UI strings live in `web/src/i18n/en.ts`. Don't hard-code user-facing text in components; add a key and use `t()`.
+- Running cost must stay $0/month (plus the domain): no databases, paid services or extra infrastructure.
+- Read `README.md` for setup, environment variables and deployment.

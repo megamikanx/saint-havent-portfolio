@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import ReleaseCard from "../components/ReleaseCard.astro";
+import { getPage, getReleases } from "../lib/content.ts";
+import { t } from "../i18n/index.ts";
+
+const page = await getPage("music");
+const releases = await getReleases();
+---
+
+<BaseLayout title={page.heading} description={page.seoDescription ?? page.intro} shareImage={releases[0]?.cover}>
+  <PageIntro page={page} />
+  <div class="container">
+    {releases.length === 0 && <p class="empty">{t("music.empty")}</p>}
+    <ul class="release-list">
+      {
+        releases.map((release) => (
+          <li>
+            <ReleaseCard release={release} />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+/**
+ * Renders rich text written in the Studio (bio, privacy policy).
+ * @portabletext/to-html escapes all text and drops unsafe link URLs.
+ */
+import { toHTML, escapeHTML, uriLooksSafe } from "@portabletext/to-html";
+import type { PortableTextBlock } from "@portabletext/types";
+
+type Props = { value?: PortableTextBlock[]; class?: string };
+const { value = [], class: className } = Astro.props;
+
+const html = toHTML(value, {
+  components: {
+    marks: {
+      link: ({ children, value }) => {
+        const href: string = value?.href ?? "";
+        if (!uriLooksSafe(href)) return children;
+        const external = /^https?:\/\//.test(href);
+        return `<a href="${escapeHTML(href)}"${external ? ' rel="noopener noreferrer"' : ""}>${children}</a>`;
+      },
+    },
+  },
+  // Silently skip block types this renderer doesn't know about.
+  onMissingComponent: false,
+});
+---
+
+<div class:list={["prose", className]} set:html={html} />

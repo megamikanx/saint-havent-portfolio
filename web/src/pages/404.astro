@@ -1,0 +1,12 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { t } from "../i18n/index.ts";
+---
+
+<BaseLayout title={t("notFound.heading")} noindex>
+  <div class="container container--narrow page-intro">
+    <h1>{t("notFound.heading")}</h1>
+    <p>{t("notFound.body")}</p>
+    <p><a href="/">{t("notFound.home")}</a></p>
+  </div>
+</BaseLayout>

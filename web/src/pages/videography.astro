@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "../components/PageIntro.astro";
+import VideoFacade from "../components/VideoFacade.astro";
+import { getPage, getVideos } from "../lib/content.ts";
+import { t } from "../i18n/index.ts";
+
+const page = await getPage("videography");
+const videos = await getVideos();
+---
+
+<BaseLayout title={page.heading} description={page.seoDescription ?? page.intro}>
+  <PageIntro page={page} />
+  <div class="container">
+    {videos.length === 0 && <p class="empty">{t("video.empty")}</p>}
+    <ul class="video-list">
+      {
+        videos.map((video) => (
+          <li class="video">
+            <VideoFacade video={video} />
+            <h2 class="video__title">{video.title}</h2>
+            {video.description && <p class="video__description">{video.description}</p>}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</BaseLayout>

@@ -1,0 +1,67 @@
+---
+/**
+ * Site header with the main navigation. On small screens the links collapse
+ * behind a Menu button (only when JavaScript is available; without JS the
+ * links simply wrap, so navigation always works).
+ */
+import { t, type UIKey } from "../i18n/index.ts";
+
+type Props = { siteTitle: string };
+const { siteTitle } = Astro.props;
+
+const links: { href: string; label: UIKey }[] = [
+  { href: "/about/", label: "nav.about" },
+  { href: "/photography/", label: "nav.photography" },
+  { href: "/videography/", label: "nav.videography" },
+  { href: "/music/", label: "nav.music" },
+  { href: "/contact/", label: "nav.contact" },
+];
+
+const current = Astro.url.pathname.replace(/\/?$/, "/");
+---
+
+<header class="site-header">
+  <div class="site-header__inner container">
+    <a href="/" class="site-title" aria-current={current === "/" ? "page" : undefined}>{siteTitle}</a>
+
+    <nav aria-label={t("nav.label")} class="site-nav">
+      <button type="button" class="site-nav__toggle" aria-expanded="false" aria-controls="site-nav-list" hidden>
+        {t("nav.menu")}
+      </button>
+      <ul id="site-nav-list" class="site-nav__list">
+        {
+          links.map((link) => (
+            <li>
+              <a href={link.href} aria-current={current === link.href ? "page" : undefined}>
+                {t(link.label)}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  // Enhance the nav into a toggle on small screens.
+  const toggle = document.querySelector<HTMLButtonElement>(".site-nav__toggle");
+  const list = document.getElementById("site-nav-list");
+  if (toggle && list) {
+    toggle.hidden = false;
+    document.documentElement.classList.add("has-nav-toggle");
+
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      list.classList.toggle("is-open", open);
+    };
+    toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+    // Escape closes the menu and returns focus to the button.
+    list.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  }
+</script>

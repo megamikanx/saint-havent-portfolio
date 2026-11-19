@@ -6,14 +6,43 @@ on:
     branches: [main]
 
 jobs:
-  check:
+  build:
+    name: build (${{ matrix.package }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [web, studio]
+    defaults:
+      run:
+        working-directory: ${{ matrix.package }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: 24
           cache: npm
+          cache-dependency-path: ${{ matrix.package }}/package-lock.json
       - run: npm ci # clean install from package-lock.json
-      - run: npm run lint
-      - run: npm run build # also runs the TypeScript check
+
+      # Website: type-check Astro files and the contact Function, then build.
+      # Builds with placeholder content because no Sanity project ID is set.
+      - if: matrix.package == 'web'
+        run: npm run check
+      - if: matrix.package == 'web'
+        run: npm run build
+
+      # Studio: type-check the schemas, then build.
+      - if: matrix.package == 'studio'
+        run: npm run typecheck
+      - if: matrix.package == 'studio'
+        run: npm run build
+
+  # The branch-protection ruleset requires a status check named "check".
+  # This job passes only if every package above passed.
+  check:
+    needs: build
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - run: test "${{ needs.build.result }}" = "success"

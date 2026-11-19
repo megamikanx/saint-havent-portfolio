@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageIntro from "../../components/PageIntro.astro";
+import ContactForm from "../../components/ContactForm.astro";
+import { getPage } from "../../lib/content.ts";
+
+const page = await getPage("contact");
+---
+
+<BaseLayout title={page.heading} description={page.seoDescription ?? page.intro}>
+  <PageIntro page={page} />
+  <div class="container container--narrow">
+    <ContactForm />
+  </div>
+</BaseLayout>

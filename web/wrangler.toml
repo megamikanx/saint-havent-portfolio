@@ -1,0 +1,6 @@
+# Used by `npm run preview` (wrangler pages dev) to run the static site and
+# the contact Pages Function locally. Production settings live in the
+# Cloudflare dashboard; see the README.
+name = "saint-havent"
+compatibility_date = "2026-11-01"
+pages_build_output_dir = "./dist"

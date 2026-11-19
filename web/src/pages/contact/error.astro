@@ -1,0 +1,13 @@
+---
+// Shown after a failed submission when JavaScript is off.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { t } from "../../i18n/index.ts";
+---
+
+<BaseLayout title={t("nav.contact")} noindex>
+  <div class="container container--narrow page-intro">
+    <h1>{t("nav.contact")}</h1>
+    <p role="alert">{t("contact.error.generic")}</p>
+    <p><a href="/contact/">{t("nav.contact")}</a></p>
+  </div>
+</BaseLayout>

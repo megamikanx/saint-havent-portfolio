@@ -1,0 +1,12 @@
+---
+// Shown after a successful submission when JavaScript is off.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { t } from "../../i18n/index.ts";
+---
+
+<BaseLayout title={t("contact.success.heading")} noindex>
+  <div class="container container--narrow page-intro">
+    <h1>{t("contact.success.heading")}</h1>
+    <p>{t("contact.success.body")}</p>
+  </div>
+</BaseLayout>
