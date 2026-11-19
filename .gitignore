@@ -1,12 +1,21 @@
 node_modules/
-.next/
 .DS_Store
 *.tsbuildinfo
-next-env.d.ts
 
-# env files (keep .env.example)
-.env*
+# Build output
+web/dist/
+web/.astro/
+web/.wrangler/
+studio/dist/
+studio/.sanity/
+
+# Secrets: env files are never committed (keep the example)
+.env
+.env.*
 !.env.example
+.dev.vars
 
-# Sanity
-.sanity/
+# Left over from the old Next.js app
+.next/
+next-env.d.ts
+/package-lock.json
