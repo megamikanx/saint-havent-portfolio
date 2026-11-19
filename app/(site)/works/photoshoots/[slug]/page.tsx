@@ -1,14 +1,6 @@
-type Props = {
-  params: Promise<{ slug: string }>;
-};
+import ProjectDetail from "@/app/components/project-detail";
 
-export default async function PhotoshootProject({ params }: Props) {
+export default async function PhotoshootProject({ params }: PageProps<"/works/photoshoots/[slug]">) {
   const { slug } = await params;
-
-  return (
-    <main>
-      <h1>{slug}</h1>
-      <p>One photoshoot — photo and blurb later.</p>
-    </main>
-  );
+  return <ProjectDetail category="photoshoots" slug={slug} />;
 }
