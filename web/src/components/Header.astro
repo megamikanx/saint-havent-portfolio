@@ -24,7 +24,7 @@ const works: { href: string; label: UIKey }[] = [
 const path = Astro.url.pathname.replace(/\/?$/, "/");
 const isCurrent = (href: string) => path === href;
 const inWorks = works.some((w) => path.startsWith(w.href));
-// Split "Double Happiness" onto two lines for the text logo, like the stamp in the Figma.
+// Split the site title (e.g. "Saint Haven't") onto two lines for the text logo, like the stamp in the Figma.
 const titleLines = settings.title.split(/\s+/);
 ---
 

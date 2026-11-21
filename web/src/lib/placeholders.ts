@@ -31,7 +31,7 @@ const LOREM =
   "Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
 
 export const settings: SiteSettings = {
-  title: "Double Happiness",
+  title: "Saint Haven't",
   ownerName: "Joel Goh",
   description: "Photography, videography and music by Joel Goh.",
   socialLinks: [
@@ -41,7 +41,7 @@ export const settings: SiteSettings = {
 };
 
 export const pages: Record<PageKey, PageContent> = {
-  home: { heading: "Double Happiness", intro: LOREM },
+  home: { heading: "Saint Haven't", intro: LOREM },
   about: { heading: "About", intro: "A little about me and my work." },
   photography: { heading: "Photography", intro: "Selected shoots and series." },
   videography: { heading: "Videography", intro: "Music videos, short films and visual work." },
