@@ -58,8 +58,11 @@ function toImageRef(raw: RawImage, fallbackAlt = ""): ImageRef | undefined {
 }
 
 // Builds run once, so cache each query for the duration of the build.
+// Only during `astro build`: in `astro dev` every refresh refetches, so
+// content published in the Studio shows up without restarting the server.
 const memo = new Map<string, Promise<unknown>>();
 function cached<T>(key: string, fn: () => Promise<T>): Promise<T> {
+  if (import.meta.env.DEV) return fn();
   if (!memo.has(key)) memo.set(key, fn());
   return memo.get(key) as Promise<T>;
 }
