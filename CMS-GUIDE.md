@@ -86,7 +86,7 @@ The website shows the video's thumbnail with a play button. The video itself onl
    - the embed code from Bandcamp (on the release page: **Share / Embed → Embed this album** → copy the code).
 5. **Publish**.
 
-Visitors see the cover, title and year, with a button that loads the Bandcamp player.
+Visitors see the cover, title and year, with the Bandcamp player underneath.
 
 **Reorder** by dragging in the **Music releases** list. **Remove** with **⋯ → Delete**.
 

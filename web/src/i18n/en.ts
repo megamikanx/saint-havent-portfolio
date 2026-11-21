@@ -36,7 +36,7 @@ export const en = {
   "video.play": "Play video: {title}",
   "video.empty": "Videos are coming soon.",
 
-  "music.play": "Load player for {title}",
+  "music.player": "Bandcamp player for {title}",
   "music.listen": "Listen on Bandcamp",
   "music.empty": "Music is coming soon.",
 

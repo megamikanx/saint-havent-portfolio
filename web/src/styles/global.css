@@ -331,8 +331,7 @@ a.stack__media:hover img { transform: scale(1.02); }
 }
 .facade__button:hover .facade__play { background: #000; }
 .facade--video .facade__iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.facade--bandcamp { margin-top: 0.75rem; }
-.facade--bandcamp .facade__iframe { width: 100%; max-width: 520px; height: 120px; border: 0; }
+.release__player { display: block; width: 100%; max-width: 520px; height: 120px; margin-top: 0.75rem; border: 0; }
 
 /* ---------- Buttons & contact form (Figma: thick-bordered boxes, red Submit) ---------- */
 .button {

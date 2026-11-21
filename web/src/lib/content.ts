@@ -169,7 +169,9 @@ export function getReleases(): Promise<Release[]> {
   return cached("releases", async () => {
     if (!isSanityConfigured) return placeholder.releases;
     const raw = await fetchSanity<(Omit<Release, "cover"> & { cover?: RawImage })[]>(queries.releases);
-    return (raw ?? []).map((r) => ({ ...r, cover: toImageRef(r.cover, r.title) }));
+    // Until the first release is added in the Studio, show the placeholder releases.
+    if (!raw?.length) return placeholder.releases;
+    return raw.map((r) => ({ ...r, cover: toImageRef(r.cover, r.title) }));
   });
 }
 

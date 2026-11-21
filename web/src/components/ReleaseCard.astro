@@ -1,7 +1,7 @@
 ---
 /**
  * A music release in the stacked layout: cover, then title, year and a
- * click-to-load Bandcamp player. The artist can paste either a Bandcamp URL
+ * Bandcamp player that shows straight away. The artist can paste either a Bandcamp URL
  * or the embed code; both are turned into a player at build time.
  */
 import Img from "./Img.astro";
@@ -29,11 +29,13 @@ const link = embed?.url ?? (release.bandcamp.startsWith("http") ? release.bandca
     {release.year && <p class="release__year">{release.year}</p>}
     {
       embed && (
-        <div class="facade facade--bandcamp" data-facade>
-          <button type="button" class="button" data-embed={bandcampEmbedUrl(embed)} data-title={release.title}>
-            <span aria-hidden="true">▶</span> {t("music.play", { title: release.title })}
-          </button>
-        </div>
+        <iframe
+          class="release__player"
+          src={bandcampEmbedUrl(embed)}
+          title={t("music.player", { title: release.title })}
+          loading="lazy"
+          allow="autoplay; encrypted-media"
+        />
       )
     }
     {
@@ -48,8 +50,3 @@ const link = embed?.url ?? (release.bandcamp.startsWith("http") ? release.bandca
     }
   </div>
 </article>
-
-<script>
-  import { activateFacades } from "../lib/facade-client.ts";
-  activateFacades();
-</script>
