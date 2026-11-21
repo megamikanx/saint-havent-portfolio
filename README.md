@@ -201,9 +201,9 @@ The notification address can be changed by the artist in Sanity (Site settings �
 
 ## Layout
 
-The page layout follows the Figma: centred logo, full-width nav bar (About / Works ▾ / Contact with Chinese labels), inner pages with a title label and large vertical Chinese characters on the left and a centred ~1080px column of stacked media boxes, and a home page with two side-by-side photos and vertical slogan columns. Keep this layout when making changes.
+The page layout follows the Figma: centred logo, full-width nav bar (About / Works ▾ / Contact), inner pages with a title label on the left and a centred ~1080px column of stacked media boxes, and a home page with two side-by-side photos. Keep this layout when making changes.
 
-The visual design isn't final, so everything is **black and white in Arial** for now. Colours and fonts are tokens at the top of `web/src/styles/global.css`.
+The visual design isn't final, so everything is **black and white in Arial** for now, with no Chinese text yet. Colours and fonts are tokens at the top of `web/src/styles/global.css`.
 
 ## Performance and accessibility notes
 

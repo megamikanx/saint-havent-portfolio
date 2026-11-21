@@ -19,7 +19,7 @@ const ungrouped = photos.filter((p) => !collections.some((c) => c._id === p.coll
 ---
 
 <BaseLayout title={page.heading} description={page.seoDescription ?? page.intro} shareImage={shoots[0]?.cover ?? photos[0]?.image} cornerStamp footerStamp={false}>
-  <PageFrame title={page.heading} zh={t("decor.page.photography")} slogan>
+  <PageFrame title={page.heading}>
     {page.intro && <p class="stack-intro">{page.intro}</p>}
     {shoots.length === 0 && ungrouped.length === 0 && <p class="empty">{t("photo.empty")}</p>}
 
@@ -58,9 +58,4 @@ const ungrouped = photos.filter((p) => !collections.some((c) => c._id === p.coll
       )
     }
   </PageFrame>
-
-  <div class="footer-word" aria-hidden="true">
-    <span class="footer-word__small">{t("decor.footerWord")}</span>
-    <span class="footer-word__large">{t("decor.footerWord")}</span>
-  </div>
 </BaseLayout>

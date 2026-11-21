@@ -2,9 +2,8 @@
 /**
  * Site header (layout from the Figma):
  * - centred logo (uploaded in Sanity, or the site title as a text stamp)
- * - optional red stamp square in the top-right corner (decorative)
- * - full-width red nav bar: About / Works ▾ / Contact, each with its Chinese
- *   label overlaid (decorative, hidden from screen readers)
+ * - optional stamp square in the top-right corner (decorative)
+ * - full-width nav bar: About / Works ▾ / Contact
  *
  * Works is a native <details> dropdown so it opens on click/tap and keyboard
  * without JavaScript. A small script closes it on Escape or outside click.
@@ -48,14 +47,12 @@ const titleLines = settings.title.split(/\s+/);
   <ul class="nav-bar__list">
     <li>
       <a href="/about/" class="nav-bar__link" aria-current={isCurrent("/about/") ? "page" : undefined}>
-        <span class="nav-bar__zh" aria-hidden="true">{t("decor.nav.about")}</span>
         <span class="nav-bar__en">{t("nav.about")}</span>
       </a>
     </li>
     <li class="nav-works">
       <details class="nav-works__details" data-works-menu>
         <summary class:list={["nav-bar__link", { "is-active": inWorks }]}>
-          <span class="nav-bar__zh" aria-hidden="true">{t("decor.nav.works")}</span>
           <span class="nav-bar__en">{t("nav.works")}</span>
         </summary>
         <ul class="nav-works__menu">
@@ -73,7 +70,6 @@ const titleLines = settings.title.split(/\s+/);
     </li>
     <li>
       <a href="/contact/" class="nav-bar__link" aria-current={isCurrent("/contact/") ? "page" : undefined}>
-        <span class="nav-bar__zh" aria-hidden="true">{t("decor.nav.contact")}</span>
         <span class="nav-bar__en">{t("nav.contact")}</span>
       </a>
     </li>

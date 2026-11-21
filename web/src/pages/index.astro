@@ -1,28 +1,20 @@
 ---
 /**
  * Home (layout from the Figma): two side-by-side photos (the left one
- * larger), vertical Chinese slogan columns down both sides, and the intro/bio
- * text centred underneath.
+ * larger) and the intro/bio text centred underneath.
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Img from "../components/Img.astro";
-import VerticalText from "../components/VerticalText.astro";
 import { getHomePage } from "../lib/content.ts";
-import { t } from "../i18n/index.ts";
 
 const page = await getHomePage();
 const [left, right] = page.featuredImages;
-const slogan = t("decor.slogan");
 ---
 
 <BaseLayout description={page.seoDescription ?? page.intro} shareImage={left}>
   <h1 class="visually-hidden">{page.heading}</h1>
 
   <section class="home">
-    <div class="home__rail home__rail--left">
-      <VerticalText text={slogan} class="vertical-text--slogan" />
-      <VerticalText text={slogan} class="vertical-text--slogan home__slogan-offset" />
-    </div>
 
     <div class="home__photos">
       {
@@ -52,9 +44,6 @@ const slogan = t("decor.slogan");
       }
     </div>
 
-    <div class="home__rail home__rail--right">
-      <VerticalText text={slogan} class="vertical-text--slogan" />
-    </div>
   </section>
 
   {page.intro && <p class="home__bio">{page.intro}</p>}
