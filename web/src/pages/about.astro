@@ -16,7 +16,7 @@ const settings = await getSiteSettings();
 ---
 
 <BaseLayout title={page.heading} description={page.seoDescription ?? page.intro} shareImage={page.portrait}>
-  <PageFrame title={page.heading} zh={t("decor.page.about")}>
+  <PageFrame title={page.heading}>
     {
       page.portrait && (
         <div class="stack__media stack__media--portrait">

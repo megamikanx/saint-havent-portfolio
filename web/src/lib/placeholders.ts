@@ -31,7 +31,7 @@ const LOREM =
   "Lorem ipsum is simply dummy text of the printing and typesetting industry. Lorem ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
 
 export const settings: SiteSettings = {
-  title: "Double Happiness",
+  title: "Saint Haven't",
   ownerName: "Joel Goh",
   description: "Photography, videography and music by Joel Goh.",
   socialLinks: [
@@ -41,7 +41,7 @@ export const settings: SiteSettings = {
 };
 
 export const pages: Record<PageKey, PageContent> = {
-  home: { heading: "Double Happiness", intro: LOREM },
+  home: { heading: "Saint Haven't", intro: LOREM },
   about: { heading: "About", intro: "A little about me and my work." },
   photography: { heading: "Photography", intro: "Selected shoots and series." },
   videography: { heading: "Videography", intro: "Music videos, short films and visual work." },
@@ -75,20 +75,25 @@ export const photos: Photo[] = [
 // No placeholder videos: the page shows its empty state until one is added in the Studio.
 export const videos: Video[] = [];
 
+// Bandcamp embed codes as pasted from Share / Embed. No cover: the player shows the artwork.
 export const releases: Release[] = [
   {
     _id: "r1",
     title: "Looking For Love",
-    cover: img("cover-1", 1000, 1000, "Placeholder cover for Looking For Love"),
     bandcamp:
-      '<iframe src="https://bandcamp.com/EmbeddedPlayer/track=398471673/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/"><a href="https://fujideathcult.bandcamp.com/track/looking-for-love">Looking For Love by FUJIDEATHCULT</a></iframe>',
+      '<iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/track=398471673/size=large/bgcol=333333/linkcol=e32c14/tracklist=false/artwork=small/transparent=true/" seamless><a href="https://fujideathcult.bandcamp.com/track/looking-for-love">Looking For Love by FUJIDEATHCULT</a></iframe>',
   },
   {
     _id: "r2",
     title: "Youth Service (demo)",
-    cover: img("cover-2", 1000, 1000, "Placeholder cover for Youth Service (demo)"),
     bandcamp:
-      '<iframe src="https://bandcamp.com/EmbeddedPlayer/track=4063750984/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/transparent=true/"><a href="https://fujideathcult.bandcamp.com/track/youth-service-demo">Youth Service (demo) by FUJIDEATHCULT</a></iframe>',
+      '<iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/track=4063750984/size=large/bgcol=333333/linkcol=e32c14/tracklist=false/artwork=small/transparent=true/" seamless><a href="https://fujideathcult.bandcamp.com/track/youth-service-demo">Youth Service (demo) by FUJIDEATHCULT</a></iframe>',
+  },
+  {
+    _id: "r3",
+    title: "FEELINGS",
+    bandcamp:
+      '<iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/track=3212857766/size=large/bgcol=333333/linkcol=e32c14/tracklist=false/artwork=small/transparent=true/" seamless><a href="https://fujideathcult.bandcamp.com/track/feelings">FEELINGS by FUJIDEATHCULT</a></iframe>',
   },
 ];
 
@@ -109,7 +114,7 @@ export const privacy: PrivacyPage = {
     "## Analytics",
     "This website uses Cloudflare Web Analytics to count visits. It does not use cookies, does not track you across other websites, and does not collect personal information. Because of this, there is no cookie banner.",
     "## Embedded content",
-    "Videos and music players from YouTube, Vimeo and Bandcamp only load after you click to play them. Once loaded, those services may collect data under their own privacy policies.",
+    "The Music page shows players from Bandcamp, which load with the page. Videos from YouTube and Vimeo only load after you click to play them. These services may collect data under their own privacy policies.",
     "## Your rights",
     "To ask what information is held about you, or to have it deleted, contact the site owner using the contact form or by replying to any email you have received.",
   ),

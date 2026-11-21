@@ -21,7 +21,7 @@ const { shoot, photos } = Astro.props;
 ---
 
 <BaseLayout title={shoot.title} description={shoot.description} shareImage={shoot.cover} cornerStamp footerStamp={false}>
-  <PageFrame title={shoot.title} zh={t("decor.page.photography")}>
+  <PageFrame title={shoot.title}>
     {shoot.description && <p class="stack-intro">{shoot.description}</p>}
     {photos.length > 0 ? <PhotoGallery photos={photos} galleryId={shoot.slug} eagerFirst /> : <p class="empty">{t("photo.empty")}</p>}
     <p class="back-link"><a href="/photography/">← {t("photo.back")}</a></p>

@@ -58,8 +58,11 @@ function toImageRef(raw: RawImage, fallbackAlt = ""): ImageRef | undefined {
 }
 
 // Builds run once, so cache each query for the duration of the build.
+// Only during `astro build`: in `astro dev` every refresh refetches, so
+// content published in the Studio shows up without restarting the server.
 const memo = new Map<string, Promise<unknown>>();
 function cached<T>(key: string, fn: () => Promise<T>): Promise<T> {
+  if (import.meta.env.DEV) return fn();
   if (!memo.has(key)) memo.set(key, fn());
   return memo.get(key) as Promise<T>;
 }
@@ -166,7 +169,9 @@ export function getReleases(): Promise<Release[]> {
   return cached("releases", async () => {
     if (!isSanityConfigured) return placeholder.releases;
     const raw = await fetchSanity<(Omit<Release, "cover"> & { cover?: RawImage })[]>(queries.releases);
-    return (raw ?? []).map((r) => ({ ...r, cover: toImageRef(r.cover, r.title) }));
+    // Until the first release is added in the Studio, show the placeholder releases.
+    if (!raw?.length) return placeholder.releases;
+    return raw.map((r) => ({ ...r, cover: toImageRef(r.cover, r.title) }));
   });
 }
 

@@ -16,21 +16,6 @@ export const en = {
   "nav.music": "Music",
   "nav.contact": "Contact",
 
-  /*
-   * Chinese text that is part of the visual design (from the Figma), not a
-   * translation. Decorative only: hidden from screen readers.
-   */
-  "decor.nav.about": "关于",
-  "decor.nav.works": "作品",
-  "decor.nav.contact": "联系方式",
-  "decor.page.about": "关于",
-  "decor.page.photography": "摄影",
-  "decor.page.videography": "视频",
-  "decor.page.music": "音乐",
-  "decor.page.contact": "联系方式",
-  "decor.page.privacy": "隐私",
-  "decor.slogan": "我就得你得要去死",
-  "decor.footerWord": "大地",
 
   "footer.social": "Social links",
   "footer.privacy": "Privacy Policy",
@@ -51,7 +36,7 @@ export const en = {
   "video.play": "Play video: {title}",
   "video.empty": "Videos are coming soon.",
 
-  "music.play": "Load player for {title}",
+  "music.player": "Bandcamp player for {title}",
   "music.listen": "Listen on Bandcamp",
   "music.empty": "Music is coming soon.",
 

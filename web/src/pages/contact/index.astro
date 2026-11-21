@@ -3,13 +3,12 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageFrame from "../../components/PageFrame.astro";
 import ContactForm from "../../components/ContactForm.astro";
 import { getPage } from "../../lib/content.ts";
-import { t } from "../../i18n/index.ts";
 
 const page = await getPage("contact");
 ---
 
 <BaseLayout title={page.heading} description={page.seoDescription ?? page.intro}>
-  <PageFrame title={page.heading} zh={t("decor.page.contact")}>
+  <PageFrame title={page.heading}>
     {page.intro && <p class="stack-intro">{page.intro}</p>}
     <ContactForm />
   </PageFrame>

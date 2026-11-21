@@ -12,7 +12,7 @@ const updated = page.updated
 ---
 
 <BaseLayout title={page.heading} description={page.seoDescription}>
-  <PageFrame title={page.heading} zh={t("decor.page.privacy")} narrow>
+  <PageFrame title={page.heading} narrow>
     {updated && <p class="muted">{t("privacy.updated")} <time datetime={page.updated}>{updated}</time></p>}
     <PortableText value={page.body} />
   </PageFrame>

@@ -1,5 +1,5 @@
 /**
- * Browser-side code for click-to-load embeds (videos and Bandcamp players).
+ * Browser-side code for click-to-load video embeds.
  * Each facade button carries data-embed (iframe URL) and data-title.
  */
 let activated = false;

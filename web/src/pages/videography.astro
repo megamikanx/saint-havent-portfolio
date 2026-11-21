@@ -14,7 +14,7 @@ const videos = await getVideos();
 ---
 
 <BaseLayout title={page.heading} description={page.seoDescription ?? page.intro} cornerStamp footerStamp={false}>
-  <PageFrame title={page.heading} zh={t("decor.page.videography")}>
+  <PageFrame title={page.heading}>
     {page.intro && <p class="stack-intro">{page.intro}</p>}
     {videos.length === 0 && <p class="empty">{t("video.empty")}</p>}
     <ul class="stack stack--spacious">
